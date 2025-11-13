@@ -1,0 +1,98 @@
+{
+  "properties": [
+    {
+      "propertyName": "bolt.op.activation.key",
+      "enabled": true,
+      "propertyValue": "",
+      "readOnly": "false",
+			"sampleValue": "your-activation-key",
+      "propertyLabel":"Activation Key",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/scm-scanner/scm-scanner.properties"
+      ],
+      "propertyDoc": "Your activation key",
+      "hidden": false,
+      "advanced": false,
+      "group":"General"
+    },
+	  {
+      "propertyName": "proxy.host",
+      "enabled": true,
+      "propertyValue": "",
+      "readOnly": "false",
+			"sampleValue": "your-proxy-host",
+      "propertyLabel":"Proxy Host",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/scm-scanner/scm-scanner.properties"
+      ],
+      "propertyDoc": "Your proxy host",
+      "hidden": false,
+      "advanced": true,
+      "group":"Proxy"
+    },
+	 	  {
+      "propertyName": "proxy.port",
+      "enabled": true,
+      "propertyValue": "",
+      "readOnly": "false",
+			"sampleValue": "your-proxy-port",
+      "propertyLabel":"Proxy Port",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/scm-scanner/scm-scanner.properties"
+      ],
+      "propertyDoc": "Your proxy port",
+      "hidden": false,
+      "advanced": true,
+      "group":"Proxy"
+    },
+		  {
+      "propertyName": "proxy.user",
+      "enabled": true,
+      "propertyValue": "",
+      "readOnly": "false",
+			"sampleValue": "your-proxy-user",
+      "propertyLabel":"Proxy User",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/scm-scanner/scm-scanner.properties"
+      ],
+      "propertyDoc": "Your proxy user",
+      "hidden": false,
+      "advanced": true,
+      "group":"Proxy"
+    },
+		  {
+      "propertyName": "proxy.password",
+      "enabled": true,
+      "propertyValue": "",
+      "readOnly": "false",
+			"sampleValue": "your-proxy-password",
+      "propertyLabel":"Proxy Password",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/scm-scanner/scm-scanner.properties"
+      ],
+      "propertyDoc": "Your proxy password",
+      "hidden": false,
+      "advanced": true,
+	  "type" : "password",
+      "group":"Proxy"
+    },
+    {
+      "propertyName": "proxy.for.all.param",
+      "enabled": true,
+      "propertyValue": "false",
+      "readOnly": "true",
+      "sampleValue": "false",
+      "propertyLabel": "Enable Proxy For All Traffic",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/scm-scanner/scm-scanner.properties"
+      ],
+      "propertyDoc": "Should Proxy be used for all traffic?",
+      "hidden": false,
+      "advanced": true,
+      "group": "Proxy"
+    }
+  ],
+  "files": [
+    
+  ]
+}

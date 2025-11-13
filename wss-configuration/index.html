@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="version" content="19.2.2">
+    <title>WhiteSource Configuration Editor</title>
+    <script src="js/htmlCreator.js"></script>
+    <script src="js/property/propertyEvents.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/property/property.js"></script>
+    <script src="js/tabEvents.js"></script>
+    <script src="libs/jquery-1.12.1-custom.js"></script>
+    <script src="libs/jquery-ui.min-1.12.1-custom.js"></script>
+    <link rel="stylesheet" href="style/jquery-ui.min-1.12.1-custom.css">
+    <link href="style/style.css" rel="stylesheet"/>
+    <link href="style/buttons.css" rel="stylesheet"/>
+    <link href="style/icons.css" rel="stylesheet"/>
+    <link href="style/tabs.css" rel="stylesheet"/>
+</head>
+<body>
+<header class="header">
+    <h2 class="header-title" id="WS-Header">WhiteSource Configuration Editor</h2>
+    <input type="image" src="images/whitesource_logo-2.png" class="whitesource-logo">
+</header>
+<script>
+    $(function () {
+        $("#div-tabs").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
+        $("#div-tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
+    });
+</script>
+
+<div id="content" class="content">
+    <div id="div-tabs" style="margin-top: 10px">
+        <div class="div-ul-tabs">
+            <ul id="ul-tabs" style="position: fixed" class="ul-tabs">
+                <li id="home-tab-li">
+                    <a id="home-tab-anchor" href="#home-tab" class="anchor-tab">
+                        <span id="home-tab-span" class="span-tab">Home</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="box-wrapper">
+            <div id="box-div" class="box-div">
+                <div id="home-tab">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    HtmlCreator.createHomeTab();
+</script>
+
+<br><br><br>
+</body>
+
+<footer class="footer">
+    <div class="footer_contents">
+        <div class="column">
+            <label>
+                <input class="importFile" style="margin-left: -10px" type="file" id="importFile"
+                       oninput="WsPropertyUtils.importFile(event)"/>
+            </label>
+        </div>
+        <div class="column" style="margin-left: 365px; margin-top: -35px ">
+            <input class="export-btn" id="exportFile" type="button" disabled='true'
+                   onclick="WsPropertyUtils.exportFile(event)">
+
+        </div>
+        <br><br>
+        <div class="column" style="margin-left: 190px">
+            <input class="input-copy-btn" type="text"
+                   value="docker run -p 8080:8080 --rm -v [ConfigDir]:/etc/usr/local/whitesource/env [IMAGE_ID]"
+                   id="copy">
+            <input class="copy-btn" style="margin-left: 16px; margin-top: -6px" type="button"
+                   onclick="WsPropertyUtils.copyToClipboard()">
+        </div>
+    </div>
+    <script>
+        let elementById = document.getElementById("copy");
+        elementById.style.width = ((elementById.value.length + 1) * 6) + 'px';
+    </script>
+</footer>
+</html>

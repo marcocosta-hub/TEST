@@ -1,0 +1,164 @@
+{
+  "properties": [
+    {
+      "propertyName": "bolt.op.activation.key",
+      "enabled": true,
+      "propertyValue": "",
+			"sampleValue": "your-activation-key",
+      "propertyLabel":"Activation Key",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/scm-scanner/scm-scanner.properties",
+		"/etc/usr/local/whitesource/bolt4scm/bolt4scm.properties"
+      ],
+      "propertyDoc": "Your activation key",
+      "hidden": false,
+      "advanced": false,
+      "group":"General"
+    },
+	  {
+      "propertyName": "proxy.host",
+      "enabled": true,
+      "propertyValue": "",
+			"sampleValue": "your-proxy-host",
+      "propertyLabel":"Proxy Host",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/scm-scanner/scm-scanner.properties",
+		 "/etc/usr/local/whitesource/bolt4scm/bolt4scm.properties"
+      ],
+      "propertyDoc": "Your proxy host",
+      "hidden": false,
+      "advanced": true,
+      "group":"Proxy"
+    },
+	 	  {
+      "propertyName": "proxy.port",
+      "enabled": true,
+      "propertyValue": "",
+			"sampleValue": "your-proxy-port",
+      "propertyLabel":"Proxy Port",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/scm-scanner/scm-scanner.properties",
+		"/etc/usr/local/whitesource/bolt4scm/bolt4scm.properties"
+
+      ],
+      "propertyDoc": "Your proxy port",
+      "hidden": false,
+      "advanced": true,
+      "group":"Proxy"
+    },
+		  {
+      "propertyName": "proxy.user",
+      "enabled": true,
+      "propertyValue": "",
+			"sampleValue": "your-proxy-user",
+      "propertyLabel":"Proxy User",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/scm-scanner/scm-scanner.properties",
+		 "/etc/usr/local/whitesource/bolt4scm/bolt4scm.properties"
+      ],
+      "propertyDoc": "Your proxy user",
+      "hidden": false,
+      "advanced": true,
+      "group":"Proxy"
+    },
+		  {
+      "propertyName": "proxy.password",
+      "enabled": true,
+      "propertyValue": "",
+			"sampleValue": "your-proxy-password",
+      "propertyLabel":"Proxy Password",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/scm-scanner/scm-scanner.properties",
+		 "/etc/usr/local/whitesource/bolt4scm/bolt4scm.properties"
+      ],
+      "propertyDoc": "Your proxy password",
+      "hidden": false,
+      "advanced": true,
+	  "type" : "password",
+      "group":"Proxy"
+    },
+    {
+      "propertyName": "proxy.for.all.param",
+      "enabled": true,
+      "propertyValue": "false",
+      "sampleValue": "false",
+      "propertyLabel": "Enable Proxy For All Traffic",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/scm-scanner/scm-scanner.properties",
+        "/etc/usr/local/whitesource/bolt4scm/bolt4scm.properties"
+      ],
+      "propertyDoc": "Should Proxy be used for all traffic?",
+      "hidden": false,
+      "advanced": true,
+      "group": "Proxy"
+    },
+    {
+      "propertyName": "webhook.remediate.url",
+      "enabled": true,
+      "propertyValue": "http://remediate-server:8080/webhook",
+      "sampleValue": "http://remediate-server:8080/webhook",
+      "propertyLabel": "webhook remediate url",
+      "propertyPaths": ["/etc/usr/local/whitesource/bolt4scm/bolt4scm.properties"],
+      "propertyDoc": "webhook remediate url",
+      "hidden": true,
+      "advanced": false,
+      "group": "General"
+    },
+    {
+      "propertyName": "bolt4scm.forward.webhook.remediate",
+      "enabled": true,
+      "propertyValue": "true",
+      "sampleValue": "true",
+      "propertyLabel": "is webhook forware to remediate",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/bolt4scm/bolt4scm.properties"
+      ],
+      "propertyDoc": "is webhook forward to remediate",
+      "hidden": true,
+      "advanced": false,
+      "group": "General"
+    },
+    {
+      "propertyName": "controller.url",
+      "enabled": true,
+      "propertyValue": "http://wss-ghe-app:5678",
+      "sampleValue": "http://wss-ghe-app:5678",
+      "propertyLabel": "Controller url",
+      "propertyDoc": "controller url",
+      "hidden": false,
+      "advanced": true,
+      "group": "Advanced"
+    },
+    {
+      "propertyName": "bolt4scm.create.issues",
+      "enabled": true,
+      "propertyValue": "true",
+      "sampleValue": "true",
+      "propertyLabel": "Should create issues",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/bolt4scm/bolt4scm.properties"
+      ],
+      "propertyDoc": "Should create issues",
+      "hidden": false,
+      "advanced": true,
+      "group": "Issues"
+    },
+    {
+      "propertyName": "bolt4scm.create.check.runs",
+      "enabled": true,
+      "propertyValue": "true",
+      "sampleValue": "true",
+      "propertyLabel": "Should create check runs",
+      "propertyPaths": [
+        "/etc/usr/local/whitesource/bolt4scm/bolt4scm.properties"
+      ],
+      "propertyDoc": "Should create check runs",
+      "hidden": false,
+      "advanced": true,
+      "group": "Issues"
+    }
+  ],
+  "files": [
+    
+  ]
+}

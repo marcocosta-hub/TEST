@@ -1,0 +1,15 @@
+gopmfile
+csproj
+htm
+html
+shtml
+xhtml
+jsp
+asp
+do
+aspx
+cabal
+opam
+config
+props
+gemspec

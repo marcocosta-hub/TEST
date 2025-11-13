@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           classpath:org/springframework/beans/factory/xml/spring-beans.xsd">
+
+    <bean id="moduleHandlerImpl"  class="com.wss.bolt.ModuleHandlerImpl" />
+    <bean id="ScheduleConsumerModule" class="com.wss.bolt.scheduler.consumer.ScheduleConsumerModule">
+        <constructor-arg ref="moduleHandlerImpl" />
+        <constructor-arg ref="IocContainer" />
+    </bean>
+    <bean id="systemsCheckModule"  class="com.wss.bolt.module.system.diagnostics.SystemsCheckModule" >
+        <constructor-arg ref = "moduleHandlerImpl"/>
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+	<bean id="InterceptorModuleop"  class="com.wss.bolt.op.webhook.interceptor.WebhookInterceptorModule" >
+        <constructor-arg ref = "moduleHandlerImpl"/>
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+	<bean id="IssuesPublisherModule"  class="com.wss.bolt.op.issues.publisher.IssuesPublisherModule" >
+        <constructor-arg ref = "moduleHandlerImpl"/>
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+    <bean id="IssuesPublisherModule2"  class="com.wss.bolt.op.issues.publisher.IssuesPublisherModule" >
+        <constructor-arg ref = "moduleHandlerImpl"/>
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+    <bean id="sastResultsPublisherModule"  class="com.wss.bolt.sast.results.publisher.SastResultsPublisherModule" >
+        <constructor-arg ref = "moduleHandlerImpl"/>
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+    <bean id="CheckRunFailModule"  class="com.wss.bolt.module.checkrun.fail.CheckRunFailModule" >
+        <constructor-arg ref = "moduleHandlerImpl"/>
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+    <bean id="scheduledIssuesPublisherModule"  class="com.wss.bolt.op.issues.publisher.IssuesPublisherModule" >
+        <constructor-arg ref = "moduleHandlerImpl"/>
+        <constructor-arg ref = "IocContainer"/>
+        <constructor-arg name = "queueName" value = "scheduledb4gpublishresults"/>
+        <constructor-arg name = "sleepAfterEmptyMessageInSeconds" value = "300"/>
+    </bean>
+    <bean id="webhookHandlerModule"  class="com.wss.bolt.op.webhook.handler.WebhookHandlerModule" >
+        <constructor-arg ref = "moduleHandlerImpl"/>
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+    <bean id="webhookHandlerModule2"  class="com.wss.bolt.op.webhook.handler.WebhookHandlerModule" >
+        <constructor-arg ref = "moduleHandlerImpl"/>
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+    <bean id="checkRunTimeoutModule"  class="com.wss.bolt.module.checkrun.timeout.CheckRunTimeoutModule" >
+        <constructor-arg ref = "moduleHandlerImpl"/>
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+    <bean id="deadQueueRetryModule"  class="com.wss.bolt.module.deadqueue.retry.DeadQueueRetryModule" >
+        <constructor-arg ref = "moduleHandlerImpl"/>
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+    <bean id="usageStatsModule"  class="com.wss.bolt.module.usage.stats.UsageStatsModule" >
+        <constructor-arg ref = "moduleHandlerImpl"/>
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+    <bean id="reachabilityModule"  class="com.wss.bolt.module.reachability.ReachabilityModule">
+        <constructor-arg ref = "moduleHandlerImpl"/>
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+</beans>

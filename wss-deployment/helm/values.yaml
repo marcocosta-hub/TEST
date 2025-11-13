@@ -1,0 +1,11 @@
+wsscanner:
+  image: {image}
+  version: {version}
+
+wsscontroller:
+  image: {image}
+  version: {version}
+
+wssremediate:
+  image: {image}
+  version: {version}

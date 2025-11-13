@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           classpath:org/springframework/beans/factory/xml/spring-beans.xsd">
+
+    <bean id="QueueFactory"  class="com.wss.common.imp.queue.whitesource.WssQueueFactoryImpl" >
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+    <bean id="KeyVault"  class="com.wss.common.imp.keyvault.whitesource.WsAgentPropertiesKeyVaultIml" >
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+    <bean id="GhServiceImpl"  class="com.wss.bolt.gh.service.GhServiceImpl" >
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+    <bean id="WhiteSourceIdentifiersServiceOnPremImpl"  class="com.wss.bolt.impl.WhiteSourceIdentifiersServiceOnPremImpl" >
+        <constructor-arg ref = "IocContainer"/>
+    </bean>
+</beans>

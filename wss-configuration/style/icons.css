@@ -1,0 +1,41 @@
+/* images */
+
+.alert-img {
+    width: 13%;
+    content: url("../images/alert.png");
+    float: right;
+}
+
+.info-img-tooltip {
+    /*height: 20px;
+    width: 20px;
+    margin-left: 5px;*/
+    margin-left: 3px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 20px;
+    font-size: 12px;
+    color: #6c798f;
+    margin-top: 3px;
+    float: left;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.info-img-tooltip .tooltiptext {
+    visibility: hidden;
+    width: auto;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 4px;
+    margin-left: 30px;
+    margin-top: -4px;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.info-img-tooltip:hover .tooltiptext {
+    visibility: visible;
+}

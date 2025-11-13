@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: propjson
+  namespace: whitesource
+data:
+{{ (.Files.Glob "configs/*").AsConfig  | indent 2 }}

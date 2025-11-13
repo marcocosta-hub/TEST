@@ -1,0 +1,479 @@
+# This default may be swapped for any compatible base image
+ARG BASE_IMAGE=ubuntu:24.04
+
+# Containerbase is used for tool installation and user/directory setup
+FROM containerbase/base:13.5.8 AS containerbase
+
+FROM ${BASE_IMAGE} as base
+
+RUN apt-get update -y && apt-get upgrade -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Containerbase supports custom user
+ARG USER_NAME=wss-scanner
+ARG USER_ID=1000
+ARG USER_HOME=/home/${USER_NAME}
+ARG APT_HTTP_PROXY
+
+# Set env and shell
+ENV BASH_ENV=/usr/local/etc/env
+SHELL ["/bin/bash" , "-c"]
+
+# Set up containerbase
+COPY --from=containerbase /usr/local/sbin/ /usr/local/sbin/
+COPY --from=containerbase /usr/local/containerbase/ /usr/local/containerbase/
+RUN install-containerbase && \
+    prepare-tool all
+
+# renovate: datasource=github-tags depName=git packageName=git/git
+ARG GIT_VERSION=v2.41.3
+RUN install-tool git
+
+# install git lfs
+#ARG GIT_LFS_VERSION=v3.5.1
+#RUN install-tool git-lfs
+
+# renovate: datasource=docker depName=node versioning=node
+ARG NODE_VERSION=22.19.0
+RUN install-tool node
+
+# renovate: datasource=npm depName=npm versioning=npm
+ARG NPM_VERSION=10.5.2
+RUN install-tool npm
+
+# renovate: datasource=npm depName=yarn
+ARG YARN_VERSION=1.22.22
+RUN install-tool yarn
+
+# renovate: datasource=npm depName=bower
+ARG BOWER_VERSION=1.8.14
+RUN install-tool bower
+
+#ARG PNPM_VERSION=10.3.0
+#RUN install-tool pnpm
+
+### provide permissions
+RUN echo '{ "allow_root": true }' > ${USER_HOME}/.bowerrc && \
+	chown -R ${USER_NAME}:${GROUP_NAME} ${USER_HOME}/.bowerrc
+
+ARG JAVA_VERSION=8.0.432+6
+RUN install-tool java
+
+ARG JAVA_VERSION=11.0.25+9
+RUN install-tool java
+
+ARG JAVA_VERSION=21.0.5+11.0.LTS
+RUN install-tool java
+
+### !!! PAY ATTENTION! The version that should be the default, must be installed last !!! ###
+ARG JAVA_VERSION=17.0.13+11
+RUN install-tool java
+
+# renovate: datasource=gradle-version depName=gradle versioning=gradle
+ARG GRADLE_VERSION=6.9.4
+RUN install-tool gradle
+
+# renovate: datasource=gradle-version depName=gradle versioning=gradle
+ARG GRADLE_VERSION=7.6.6
+RUN install-tool gradle
+
+### !!! PAY ATTENTION! The version that should be the default, must be installed last !!! ###
+# renovate: datasource=gradle-version depName=gradle versioning=gradle
+ARG GRADLE_VERSION=8.14.3
+RUN install-tool gradle
+
+# renovate: datasource=docker depName=golang versioning=docker
+#ARG GOLANG_VERSION=1.24.7
+#RUN install-tool golang
+# A temporary workaround, until it is fixed by renovate
+#ENV GOSUMDB="sum.golang.org"
+
+#USER ${USER_ID}
+## Install package managers
+#RUN go install github.com/tools/godep@latest
+#RUN go install github.com/LK4D4/vndr@latest
+#RUN go install  github.com/kardianos/govendor@latest
+
+#All Deparacted/archived go package managers
+# RUN go install  github.com/gpmgo/gopm@latest
+# RUN go install  github.com/golang/dep/cmd/dep@latest
+# RUN go install github.com/Masterminds/glide@latest
+# RUN curl https://glide.sh/get | sh
+#USER 0
+#RUN chgrp -R 0 /go && chmod -R g=u /go
+
+# renovate: datasource=maven depName=maven packageName=org.apache.maven:maven
+ARG MAVEN_VERSION=3.9.11
+RUN install-tool maven
+
+# renovate: datasource=github-releases depName=scala packageName=scala/scala
+# ARG SCALA_VERSION=v2.13.16
+# RUN install-tool scala
+
+# renovate: datasource=github-releases depName=sbt packageName=sbt/sbt
+# ARG SBT_VERSION=1.5.7
+# RUN install-tool sbt
+
+# renovate: datasource=github-releases depName=python packageName=containerbase/python-prebuild
+ARG PYTHON_VERSION=3.6.15
+RUN install-tool python
+
+# renovate: datasource=github-releases depName=python packageName=containerbase/python-prebuild
+ARG PYTHON_VERSION=2.7.18
+RUN install-tool python
+
+# renovate: datasource=github-releases depName=python lookupName=containerbase/python-prebuild
+ARG PYTHON_VERSION=3.11.13
+RUN install-tool python
+
+# renovate: datasource=github-releases depName=python lookupName=containerbase/python-prebuild
+ARG PYTHON_VERSION=3.12.9
+RUN install-tool python
+
+# renovate: datasource=github-releases depName=python lookupName=containerbase/python-prebuild
+ARG PYTHON_VERSION=3.10.18
+RUN install-tool python
+
+# renovate: datasource=github-releases depName=python packageName=containerbase/python-prebuild
+ARG PYTHON_VERSION=3.7.17
+RUN install-tool python
+
+# renovate: datasource=github-releases depName=python packageName=containerbase/python-prebuild
+ARG PYTHON_VERSION=3.8.20
+RUN install-tool python
+
+# renovate: datasource=github-releases depName=python lookupName=containerbase/python-prebuild
+ARG PYTHON_VERSION=3.13.7
+RUN install-tool python
+
+# renovate: datasource=github-releases depName=python packageName=containerbase/python-prebuild
+ARG PYTHON_VERSION=3.9.21
+RUN install-tool python
+
+# renovate: datasource=pypi depName=checkov ; Must be installed after python and before python version 3.7.17
+ARG CHECKOV_VERSION=3.2.369
+RUN install-tool checkov
+
+#ARG PHP_VERSION=8.4.8
+#RUN install-tool php
+
+# renovate: datasource=github-releases depName=composer packageName=composer/composer
+#ARG COMPOSER_VERSION=2.0.13
+#RUN install-tool composer
+
+# These are needed to get earlier dotnet versions to install in Ubuntu 24.04
+# RUN curl -o /tmp/libssl1.1.deb https://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.24_amd64.deb
+# RUN dpkg -i /tmp/libssl1.1.deb
+
+#ARG DOTNET_VERSION=2.2.207
+#RUN install-tool dotnet
+
+#ARG DOTNET_VERSION=3.1.416
+#RUN install-tool dotnet
+
+#ARG DOTNET_VERSION=5.0.408
+#RUN install-tool dotnet
+
+#ARG DOTNET_VERSION=6.0.428
+#RUN install-tool dotnet
+
+ARG DOTNET_VERSION=8.0.413
+RUN install-tool dotnet
+
+ARG DOTNET_VERSION=9.0.101
+RUN install-tool dotnet
+
+ARG DOTNET_VERSION=7.0.410
+RUN install-tool dotnet
+
+# Set .NET SDK 7.0.405 as the default version
+RUN echo '{ "sdk": { "version": "7.0.410" } }' > ${USER_HOME}/global.json
+
+#ARG RUST_VERSION=1.58.1
+#RUN install-tool rust
+
+# pip user install (so available for all python versions)
+USER ${USER_ID}
+
+# renovate: datasource=pypi depName=pipenv
+ARG PIPENV_VERSION=2023.7.23
+RUN install-tool pipenv
+
+
+
+USER 0
+
+# renovate: datasource=pypi
+
+ARG POETRY_VERSION=2.0.1
+RUN install-tool poetry
+
+ARG POETRY_VERSION=1.6.1
+RUN install-tool poetry
+
+#ENV GEM_HOME=/tmp/containerbase/cache/.ruby
+#ENV GEM_PATH="${GEM_HOME}"
+# renovate: datasource=github-releases depName=ruby lookupName=containerbase/ruby-prebuild
+#ARG RUBY_VERSION=3.2.2
+#RUN install-tool ruby && \
+#    gem install rubygems-update -v 3.3.0 && \
+#    gem update --system
+#ENV PATH="${GEM_HOME}/bin:${PATH}"
+
+# renovate: datasource=rubygems depName=bundler versioning=ruby
+#ARG BUNDLER_VERSION=2.4.18
+#RUN install-tool bundler
+
+#RUN install-tool erlang 24.3.3.0
+
+#RUN install-tool elixir 1.13.4
+
+#### Install rbenv and ruby-build
+### or maybe be saved to /etc/profile instead of /etc/profile.d/
+#RUN git clone https://github.com/sstephenson/rbenv.git ${USER_HOME}/.rbenv; \
+#	git clone https://github.com/sstephenson/ruby-build.git ${USER_HOME}/.rbenv/plugins/ruby-build; \
+#	${USER_HOME}/.rbenv/plugins/ruby-build/install.sh && \
+#	echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh && \
+#	echo 'eval "$(rbenv init -)"' >> ${USER_HOME}/.bashrc && \
+#	chown -R ${USER_NAME}:${GROUP_NAME} ${USER_HOME}/.rbenv ${USER_HOME}/.bashrc
+#ENV PATH ${USER_HOME}/.rbenv/bin:$PATH
+
+# renovate: datasource=rubygems depName=cocoapods versioning=ruby
+# ARG COCOAPODS_VERSION=1.16.2
+# RUN install-tool cocoapods
+# RUN adduser cocoapods
+# USER cocoapods
+# RUN pod setup
+# USER 0
+
+#ARG HELM_VERSION=3.11.2
+#RUN install-tool helm
+
+## No renovate datasource exists yet
+ARG HASKELL_GHC_VERSION=8.6.5
+
+## No renovate datasource exists yet
+ARG CABAL_VERSION=3.2
+
+# Fix for npm engine-strict
+ENV npm_config_engine_strict=false
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV LANGUAGE	en_US.UTF-8
+ENV LANG    	en_US.UTF-8
+ENV LC_ALL  	en_US.UTF-8
+
+### Install wget, curl, git, unzip, gnupg, locales
+RUN apt-get update && \
+	apt-get -y install wget curl git unzip gnupg locales && \
+	locale-gen en_US.UTF-8 && \
+	apt-get clean && \
+	rm -rf /var/lib/apt/lists/* && \
+	rm -rf /tmp/*
+
+
+##### Install Conda
+## Warning: Using Anaconda's default channel may require a commercial license.
+## However, the conda-forge channel is not subject to the same terms. See commented
+## out settings below for an example of using conda-forge.
+#
+# Set conda-forge to be the default registry
+# conda config --add channels conda-forge
+# Use conda-forge strictly
+# conda config --set channel_priority strict
+#
+#USER ${USER_ID}
+#RUN cd ${USER_HOME} && \
+#        mkdir -p ${USER_HOME}/miniconda3 && \
+#        wget https://repo.anaconda.com/miniconda/Miniconda3-py39_24.1.2-0-Linux-x86_64.sh -O ${USER_HOME}/miniconda3/miniconda.sh && \
+#        bash ${USER_HOME}/miniconda3/miniconda.sh -b -u -p ${USER_HOME}/miniconda3 && \
+#        rm -rf ${USER_HOME}/miniconda3/miniconda.sh
+#
+#
+#USER 0
+#RUN echo '#!/usr/bin/env bash' >> /usr/bin/conda && \
+#        echo 'source ${USER_HOME}/miniconda3/etc/profile.d/conda.sh' >> /usr/bin/conda && \
+#        echo '${USER_HOME}/miniconda3/bin/conda "$@"' >> /usr/bin/conda && \
+#        chmod +x /usr/bin/conda
+
+
+#### Important note ###
+#### uncomment for:
+####    Scala
+####    SBT
+####    Mix/ Hex/ Erlang/ Elixir
+####    dotnet/nuget cli's
+#RUN apt-get update && \
+#	apt-get install -y --force-yes build-essential software-properties-common && \
+#	apt-get install -y --force-yes zlib1g-dev libssl-dev libreadline-dev libyaml-dev libxml2-dev libxslt-dev && \
+#	apt-get clean && \
+#	rm -rf /var/lib/apt/lists/* && \
+#	rm -rf /tmp/*
+
+### Install PHP Plugins
+#RUN apt-get update && \
+#	apt-get install -y php-mbstring && \
+#	apt-get install -y php-dom && \
+#	apt-get clean && \
+#	rm -rf /var/lib/apt/lists/* && \
+#	rm -rf /tmp/*
+
+
+#### Install R and Packrat
+# Set environment variables to avoid interactive prompts
+#ENV DEBIAN_FRONTEND=noninteractive
+#ENV TZ=UTC
+## Update system and install dependencies
+#RUN apt-get update && apt-get install -y \
+#    software-properties-common \
+#    dirmngr \
+#    lsb-release \
+#    build-essential \
+#    gfortran \
+#    libcurl4-openssl-dev \
+#    libssl-dev \
+#    libxml2-dev \
+#    libfontconfig1-dev \
+#    libharfbuzz-dev \
+#    libfribidi-dev \
+#    libfreetype6-dev \
+#    libpng-dev \
+#    libtiff5-dev \
+#    libjpeg-dev \
+#    git \
+#    && rm -rf /var/lib/apt/lists/*
+## Add CRAN repository and install R
+#RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | gpg --dearmor -o /usr/share/keyrings/r-project.gpg && \
+#    echo "deb [signed-by=/usr/share/keyrings/r-project.gpg] https://cloud.r-project.org/bin/linux/ubuntu noble-cran40/" | tee -a /etc/apt/sources.list.d/r-project.list && \
+#    apt-get update && \
+#    apt-get install -y r-base r-base-dev && \
+#    rm -rf /var/lib/apt/lists/*
+## Install devtools and packrat from R
+#RUN R -e "install.packages(c('devtools', 'packrat'), repos='https://cloud.r-project.org/')"
+
+
+#### Install Cabal
+#RUN apt-get update &&\
+#	apt-get install -y build-essential curl libffi-dev libffi8ubuntu1 libgmp-dev libgmp10 libncurses-dev && \
+#	apt-get clean && \
+#	rm -rf /var/lib/apt/lists/* && \
+#	rm -rf /tmp/*
+#
+#USER ${USER_ID}
+#
+#RUN curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh && \
+#	source /home/wss-scanner/.ghcup/env && \
+#	echo "source /home/wss-scanner/.ghcup/env" >> /home/wss-scanner/.bashrc && \
+#	ghcup install cabal ${CABAL_VERSION} &&\
+#	cabal update
+#
+#USER 0
+
+#### Install Mono
+#RUN apt-get update && \
+#    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
+#    apt-get install -y --no-install-recommends apt-transport-https ca-certificates && \
+#    echo "deb https://download.mono-project.com/repo/ubuntu bionic main" | tee /etc/apt/sources.list.d/mono-official-stable.list && \
+#    apt-get update && \
+#    apt-get install -y mono-devel && \
+#    apt-get clean && \
+#    rm -rf /var/lib/apt/lists/* && \
+#    rm -rf /tmp/*
+#
+#### Install Nuget CLI
+#RUN apt-get update && \
+#    apt-get install nuget
+
+## Install Paket
+#ENV PAKET_HOME=${USER_HOME}/.dotnet/tools
+#ENV PATH="${PATH}:${PAKET_HOME}"
+#RUN dotnet tool install Paket --version 7.2.1 --tool-path ${PAKET_HOME}
+
+## Install Bazel 6.1.1, 5.1.1 and set version 6.1.1 as default
+#RUN echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list && \
+#    curl https://bazel.build/bazel-release.pub.gpg | apt-key add - && \
+#    apt-get update && \
+#    apt-get -y install bazel-6.1.1 && \
+#    apt-get -y upgrade bazel-6.1.1 && \
+#    apt-get -y install bazel-5.1.1 && \
+#    apt-get -y upgrade bazel-5.1.1 && \
+#    ln -s /usr/bin/bazel-6.1.1 /usr/local/bin/bazel
+
+# Install Swift (including SPM)
+#ARG SWIFT_VERSION=5.10.0
+#RUN install-tool swift
+
+# delete the partially populated directory /tmp/containerbase and recreate one with full content instead
+RUN rm -rf /tmp/* && containerbase-cli init tool all
+
+# END OF BASE IMAGE
+
+## Uncomment the below to enable Dynamic package manager install for selected package managers
+##
+# COPY --from=containerbase/runinstall:20240327 /home/ubuntu/bin/runinstall ${USER_HOME}/.local/bin/runinstall
+# RUN ln -s ${USER_HOME}/.local/bin/runinstall ${USER_HOME}/.local/bin/mvn
+# RUN ln -s ${USER_HOME}/.local/bin/runinstall ${USER_HOME}/.local/bin/pipenv
+# RUN ln -s ${USER_HOME}/.local/bin/runinstall ${USER_HOME}/.local/bin/poetry
+
+# Download the pre-scan builder and set it in $PATH, can be replaced by:
+#--build-arg $PSB_URL=URL
+RUN echo "Downloading PSB version 8.1"
+ARG PSB_URL=https://downloads.mend.io/production/sca/pre-scan-builder/25.8.1/linux_amd64/psb
+RUN curl $PSB_URL --create-dirs -o /psb/bin/psb && chmod 0775 -R /psb
+ENV PATH=$PATH:/psb/bin/
+
+# Download the mend sca tool
+#--build-arg $SCA_TOOL_URL=URL
+USER 0
+ARG SCA_TOOL_URL=https://downloads.mend.io/production/sca/sca-wrapper/25.8.2.3/linux_amd64/sca-wrapper
+RUN echo "Downloading Mend SCA tool [$SCA_TOOL_URL]"
+RUN curl $SCA_TOOL_URL --create-dirs -o /sca-wrapper/bin/sca-wrapper && chmod 0777 -R /sca-wrapper
+ENV MEND_SCA_BIN_DIR=/sca-wrapper/bin
+ENV PATH=$PATH:$MEND_SCA_BIN_DIR
+ENV MEND_SCA_SCAN_PRINT_ENGINE_LOGS=true
+USER ${USER_ID}
+RUN sca_tool_version="$(sca-wrapper version)" && echo "Mend-SCA-Tool Version:" $sca_tool_version
+RUN sca-wrapper init
+USER 0
+RUN chmod 0777 -R /sca-wrapper
+
+# Download the SAST CLI and set it in $PATH, can be replaced by:
+#--build-arg SASTCLI=URL
+RUN echo "Downloading Mend Unified CLI wrapper"
+ARG SASTCLI=https://downloads.mend.io/cli/linux_amd64/mend
+RUN curl $SASTCLI --create-dirs -o /sast/bin/mend && chmod 0775 /sast/bin/mend
+ENV PATH=$PATH:/sast/bin
+
+### copy folder
+COPY docker-image-scanner/ /
+
+# Temporarily copying the current Dockerfile to generate the installed-versions.json file.
+ARG THIS_DOCKERFILE_NAME=Dockerfile
+COPY ${THIS_DOCKERFILE_NAME} /tmp/target-dockerfile
+RUN chmod +x /generate_versions_json.sh \
+  && mkdir "${USER_HOME}/.mend" \
+  && /generate_versions_json.sh /tmp/target-dockerfile \
+     > "${USER_HOME}/.mend/installed-versions.json" \
+  && rm /tmp/target-dockerfile && rm /generate_versions_json.sh
+
+RUN chmod 755 /start.sh
+RUN chgrp -R 0 ${USER_HOME} && chmod -R g=u ${USER_HOME}
+
+ENV SCM_SCANNER_HOME=/etc/usr/local/whitesource/scm-scanner
+RUN chmod -R ugo+rw ${SCM_SCANNER_HOME}
+ENV LOG4J_FORMAT_MSG_NO_LOOKUPS=true
+### Switch User ###
+ENV HOME ${USER_HOME}
+WORKDIR ${USER_HOME}
+USER ${USER_NAME}
+ARG JAVA_OPTS
+ENV JAVA_OPTS=${JAVA_OPTS}
+ENV JDK_JAVA_OPTIONS "--add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED"
+
+EXPOSE 9393
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+# Mend traceability labels
+LABEL io.mend.image.dockerfile.path=integration-new/github-scanner-parent/scm-packaging/src/assembly-staging/docker/Dockerfile
+LABEL org.opencontainers.image.source=https://github.com/whitesource/github-scanner
+
+CMD ["/start.sh"]

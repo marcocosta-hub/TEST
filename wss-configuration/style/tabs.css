@@ -1,0 +1,178 @@
+/* Vertical Tabs */
+
+.div-ul-tabs {
+    font-family: arial, serif;
+    height: 100px;
+    width: 200px;
+    outline: none;
+}
+
+.ui-tabs-vertical {
+    outline: none;
+}
+
+.ul-tabs {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    list-style: none;
+    max-height: 500px;
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+.ui-tabs-vertical .ui-tabs-nav {
+    padding: .2em .1em 22.4em .2em;
+    float: left;
+    width: 15%;
+    height: 54%;
+    margin-top: -88px;
+    margin-left: -10px;
+    outline: none;
+    background: white;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li {
+    clear: left;
+    width: 100%;
+    margin: 0 -1px .2em 0;
+    outline: none;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li a {
+    display: block;
+    outline: none;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+    padding-bottom: 0;
+    padding-right: .1em;
+    border-right-width: 1px;
+    outline: none;
+}
+
+.ui-tabs-vertical .ui-tabs-panel {
+    width: auto;
+    padding-top: 20px;
+    outline: none;
+}
+
+.wrapper-div {
+    float: left;
+    margin: -175px 302px 150px;
+    background: white;
+    padding: 169px 586px 0px 998px;
+    height: 56%;
+    overflow: scroll;
+    overflow-x: hidden;
+    position: absolute;
+}
+
+.box-wrapper {
+    margin-left: 295px;
+    margin-top: -178px;
+    width: 84%;
+    height: 357px;
+    padding-top: 316px;
+    background: #e4edff;
+    overflow: auto;
+}
+
+.box-div {
+    margin: -328px 326px 6em 0;
+    width: 70%;
+    height: auto;
+    overflow: auto;
+    outline: none;
+    overflow-x: hidden;
+}
+
+.ui-widget-content {
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.ui-widget.ui-widget-content {
+    border: none;
+    outline: none;
+}
+
+.ui-widget-header {
+    background: none;
+    outline: none;
+}
+
+.ui-tabs {
+    position: static;
+    outline: none;
+}
+
+.span-tab {
+    float: left;
+    padding: 5px;
+    color: black;
+    outline: none;
+}
+
+.anchor-tab {
+    width: 90%;
+    outline: none;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    outline: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2f4a9c;
+    border-radius: 10px;
+    outline: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2f4a9c;
+    outline: none;
+}
+
+.ui-tabs .ui-tabs-nav li {
+    float: none;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor {
+    background: #e4edff;
+    border: gray;
+    outline: none;
+    cursor: default;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    background-color: lightgray;
+    border: none;
+    font-weight: normal;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    background: none;
+    border: none;
+    font-weight: normal;
+}
+
+/*.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover {
+    border: 1px solid #ccc;
+
+}*/
+
+.ui-tabs-tab, .ui-corner-top .ui-state-default, .ui-tab .ui-state-hover {
+    background: lightgray;
+}
+
+

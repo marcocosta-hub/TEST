@@ -1,0 +1,22 @@
+/*Button*/
+.input-copy-btn {
+    margin-left: -200px;
+    float: left;
+}
+
+.copy-btn {
+    float: left;
+    padding-right: 101px;
+    padding-bottom: 16px;
+    border: none;
+    background: url("../images/copy.png");
+}
+
+.export-btn {
+    margin-right: 10px;
+    margin-left: 161px;
+    padding-right: 101px;
+    padding-bottom: 16px;
+    border: none;
+    background: url("../images/export.png");
+}

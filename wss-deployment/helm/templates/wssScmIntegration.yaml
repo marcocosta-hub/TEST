@@ -1,0 +1,137 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: whitesource
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remediate-server
+  namespace: whitesource
+  labels:
+    app: remediate-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: remediate-server
+  template:
+    metadata:
+      labels:
+        app: remediate-server
+    spec:
+      containers:
+        - name: remediate-server
+          ports:
+            - containerPort: 8080
+          image: {{ .Values.wssremediate.image }}:{{ .Values.wssremediate.version }}
+          {{- if .Values.imagePullSecrets }}
+          imagePullSecrets:
+            - name: {{ .Values.imagePullSecrets }}
+          {{- end }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/usr/local/whitesource/conf/
+      volumes:
+        - name: config-volume
+          configMap:
+            name: propjson
+
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: remediate-server
+  namespace: whitesource
+spec:
+  selector:
+    app: remediate-server
+  ports:
+    -  protocol: TCP
+       port: 8080
+       targetPort: 8080
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: wss-ghe-app
+  namespace: whitesource
+spec:
+  selector:
+    app: wss-ghe-app
+  ports:
+    -  protocol: TCP
+       port: 5678
+       targetPort: 5678
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wss-scanner
+  namespace: whitesource
+  labels:
+    app: wss-scanner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wss-scanner
+  template:
+    metadata:
+      labels:
+        app: wss-scanner
+    spec:
+      containers:
+        - name: wss-scanner
+          image: {{ .Values.wsscanner.image }}:{{ .Values.wsscanner.version }}
+          {{- if .Values.imagePullSecrets }}
+          imagePullSecrets:
+            - name: {{ .Values.imagePullSecrets }}
+          {{- end }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/usr/local/whitesource/conf/
+      volumes:
+        - name: config-volume
+          configMap:
+            name: propjson
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wss-ghe-app
+  namespace: whitesource
+  labels:
+    app: wss-ghe-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wss-ghe-app
+  template:
+    metadata:
+      labels:
+        app: wss-ghe-app
+    spec:
+      containers:
+        - name: wss-ghe-app
+          image: {{ .Values.wsscontroller.image }}:{{ .Values.wsscontroller.version }}
+          {{- if .Values.imagePullSecrets }}
+          imagePullSecrets:
+            - name: {{ .Values.imagePullSecrets }}
+          {{- end }}
+          ports:
+            - containerPort: 5678
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/usr/local/whitesource/conf/
+      volumes:
+        - name: config-volume
+          configMap:
+            name: propjson
