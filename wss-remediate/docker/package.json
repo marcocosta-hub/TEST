@@ -38,7 +38,7 @@
     "nanoid": "5.1.5",
     "parse-link-header": "2.0.0",
     "proper-url-join": "2.1.2",
-    "renovate": "41.97.10",
+    "renovate": "41.97.11",
     "safe-stable-stringify": "2.5.0",
     "semver": "7.7.2",
     "split2": "4.2.0",
